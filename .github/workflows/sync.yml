@@ -29,6 +29,11 @@ jobs:
           target_sync_branch: main
           target_repo_token: ${{ secrets.UPSTREAM_TOKEN }}
 
+      # 拉取远程最新更改，避免 non-fast-forward 错误
+      - name: Pull latest changes from remote before pushing
+        run: |
+          git pull origin main --rebase
+
       - name: Sync check
         if: failure()
         run: |
